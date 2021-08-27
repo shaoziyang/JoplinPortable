@@ -97,7 +97,7 @@ begin
     s := lst1.Items[lst1.Tag];
     AssignFile(F, path + 'JoplinPortable.cmd');
     Rewrite(F);
-    write(F, '@start %~dp0\App\Joplin\Joplin.exe --profile %~dp0\Notes\' + s);
+    write(F, '@start "" "%~dp0\App\Joplin\Joplin.exe" --profile "%~dp0\Notes\' + s + '"');
 
     note := s;
     ini.WriteString('option', 'note', note);
