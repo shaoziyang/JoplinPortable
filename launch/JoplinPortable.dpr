@@ -33,7 +33,10 @@ begin
     else
       DataPath := path + 'Notes\' + DataPath;
 
-    ShellExecute(0, 'open', PChar(AppName), PChar('--profile ' + DataPath), '', SW_SHOW);
+    if not DirectoryExists(DataPath) then
+      CreateDir(DataPath);
+
+    ShellExecute(0, 'open', PChar(AppName), PChar('--profile "' + DataPath + '"'), '', SW_SHOW);
   end;
 end.
 
