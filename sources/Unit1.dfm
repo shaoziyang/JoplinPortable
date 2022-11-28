@@ -1,16 +1,21 @@
 object FormMain: TFormMain
   Left = 0
   Top = 0
+  AlphaBlend = True
+  AlphaBlendValue = 150
+  BorderStyle = bsNone
   Caption = 'FormMain'
-  ClientHeight = 202
-  ClientWidth = 333
+  ClientHeight = 241
+  ClientWidth = 387
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  FormStyle = fsStayOnTop
   OldCreateOrder = False
+  Position = poDesktopCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
@@ -22,6 +27,14 @@ object FormMain: TFormMain
     Height = 41
     TabOrder = 0
     Visible = False
+  end
+  object pbBar: TProgressBar
+    Left = 8
+    Top = 177
+    Width = 360
+    Height = 36
+    Position = 50
+    TabOrder = 1
   end
   object tray: TTrayIcon
     Icon.Data = {
@@ -2641,7 +2654,7 @@ object FormMain: TFormMain
     AutoHotkeys = maManual
     Left = 184
     Top = 56
-    object pmNotes: TMenuItem
+    object pmJoplinPortable: TMenuItem
       Bitmap.Data = {
         36100000424D3610000000000000360000002800000020000000200000000100
         2000000000000010000000000000000000000000000000000000D3700F00CD6A
@@ -2773,7 +2786,8 @@ object FormMain: TFormMain
         1B48EF8C1B48EE8B1A49EC891A49EB881949E9861949E8851849E6831549E582
         1649E3801649E27F1549E17E1549E07D1448DE7B1248DD7A1349DB7812432B18
         CF2CDB781102DE7B1100D8750F00D9761200DC791500D3700F00}
-      Caption = 'Joplin Portable'
+      Caption = 'JoplinPortable v2'
+      OnClick = pmJoplinPortableClick
     end
     object N2: TMenuItem
       Caption = '-'

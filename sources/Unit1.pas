@@ -18,7 +18,12 @@ uses
   IniFiles,
   TLHelp32,
   Menus,
-  StdCtrls;
+  StdCtrls,
+  ComCtrls;
+
+const
+  GITHUB_URL = 'https://github.com/shaoziyang/JoplinPortable';
+
 
 type
   TFormMain = class(TForm)
@@ -27,13 +32,14 @@ type
     pmTray: TPopupMenu;
     N1: TMenuItem;
     pmExit: TMenuItem;
-    pmNotes: TMenuItem;
+    pmJoplinPortable: TMenuItem;
     pmAdd: TMenuItem;
     N3: TMenuItem;
     pmnote: TMenuItem;
     N2: TMenuItem;
     mmoNotes: TMemo;
     tmrWDG: TTimer;
+    pbBar: TProgressBar;
     procedure pmExitClick(Sender: TObject);
     procedure pmAddClick(Sender: TObject);
     procedure pmnoteClick(Sender: TObject);
@@ -41,6 +47,7 @@ type
     procedure tmrWDGTimer(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure trayClick(Sender: TObject);
+    procedure pmJoplinPortableClick(Sender: TObject);
   private
     { Private declarations }
     WDGen: Boolean;
@@ -123,6 +130,7 @@ begin
     n := 100;
     while n > 0 do
     begin
+      n := n - 1;
       Application.ProcessMessages;
       Sleep(10);
       joplin := FindWindow(nil, 'Joplin');
@@ -154,6 +162,8 @@ end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
+  pbBar.Position:=0;
+  FormMain.AutoSize:=True;
   app_path := ExtractFilePath(Application.ExeName);
   joplin_app := app_path + 'App\Joplin\Joplin.exe';
   joplin_notes_path := app_path + 'Notes\';
@@ -234,6 +244,9 @@ begin
   begin
     WDGen := False;
     CloseJoplin;
+    Application.ShowMainForm := True;
+    FormMain.Show;
+    FormMain.BringToFront;
 
     TMenuItem(Sender).Checked := True;
     curNote := TMenuItem(Sender).Hint;
@@ -245,18 +258,29 @@ begin
     if n > 9 then n := 9;
     tray.IconIndex := n;
 
-    n := 100;
+    pbBar.Max:=1000;
+    n := pbBar.Max;
     while n > 0 do
     begin
+      pbBar.Position := pbBar.Max - n;
+      n := n - 1;
       Application.ProcessMessages;
       Sleep(10);
       if FindWindow(nil, 'Joplin') <> 0 then
       begin
-        n := 0;
+        if n > pbBar.Max div 3 then
+          n := pbBar.Max div 3;
       end;
     end;
+    FormMain.Hide;
+    Application.ShowMainForm := False;
     WDGen := True;
   end;
+end;
+
+procedure TFormMain.pmJoplinPortableClick(Sender: TObject);
+begin
+   ShellExecute(Handle, '',GITHUB_URL,  '', '', SW_SHOW);
 end;
 
 procedure TFormMain.tmrWDGTimer(Sender: TObject);
