@@ -289,11 +289,11 @@ begin
   begin
     // Monitoring joplin, if joplin exit, close JoplinPortable itself
     // In order to prevent accidental detection errors,
-    // continuously monitor for 5 times
+    // continuously monitor for 10 times
     if FindWindow(nil, 'Joplin') = 0 then
     begin
       tmrWDG.Tag := tmrWDG.Tag + 1;
-      if tmrWDG.Tag > 5 then
+      if tmrWDG.Tag > 10 then
         Close;
     end
     else
