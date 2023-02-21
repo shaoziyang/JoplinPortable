@@ -15,7 +15,7 @@ object FormMain: TFormMain
   Font.Style = []
   FormStyle = fsStayOnTop
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96

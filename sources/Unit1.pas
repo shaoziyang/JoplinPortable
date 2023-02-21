@@ -162,8 +162,15 @@ end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
-  pbBar.Position:=0;
-  FormMain.AutoSize:=True;
+  // Exit if Joplin has already running
+  if (FindWindow(nil, 'Joplin') <> 0) then
+  begin
+    FrontJoplin;
+    Close;
+  end;
+
+  pbBar.Position := 0;
+  FormMain.AutoSize := True;
   app_path := ExtractFilePath(Application.ExeName);
   joplin_app := app_path + 'App\Joplin\Joplin.exe';
   joplin_notes_path := app_path + 'Notes\';
@@ -258,7 +265,7 @@ begin
     if n > 9 then n := 9;
     tray.IconIndex := n;
 
-    pbBar.Max:=1000;
+    pbBar.Max := 1000;
     n := pbBar.Max;
     while n > 0 do
     begin
@@ -280,7 +287,7 @@ end;
 
 procedure TFormMain.pmJoplinPortableClick(Sender: TObject);
 begin
-   ShellExecute(Handle, '',GITHUB_URL,  '', '', SW_SHOW);
+  ShellExecute(Handle, '', GITHUB_URL, '', '', SW_SHOW);
 end;
 
 procedure TFormMain.tmrWDGTimer(Sender: TObject);
